@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from aedu.views import index, manage
-from aedu.rest import auth
+from aedu.rest import auth, teacher
 
 urlpatterns = patterns('',
     # Examples:
@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     ('^manage/$', manage),
 
     ('^rest/auth/login$', auth.login),
+    ('^rest/techer/list$', teacher.all),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 

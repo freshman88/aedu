@@ -29,6 +29,16 @@ $(function(){
         }
     });
 
+    $('#utype ul.dropdown-menu li').on('click', function(){
+        var value = $(this).attr('data-value');
+        switch(value){
+            case 'admin': $('#usernameLabel').html('用户名'); break;
+            case 'tech': $('#usernameLabel').html('工号'); break;
+            case 'stu': $('#usernameLabel').html('学号'); break;
+            default: break;
+        }
+    });
+
 
     auto_fill_pw();
 

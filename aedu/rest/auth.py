@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseNotFound
-from user.service import AdminService
+from user.service import AdminService, TechService, StuService
 import json
 
 def login(request):
@@ -40,8 +40,26 @@ def admin_login(req, uname, pw, utype):
         return HttpResponse(json.dumps({'code': 200}))
 
 def tech_login(req, uname, pw, utype):
-    return HttpResponse(json.dumps({'code': 400, 'message': 'unsuport'}))
+    service = TechService()
+    rs = service.findByNumber(uname)
+    if rs is None:
+        return HttpResponse(json.dumps({'code': 400, 'message': error_msg1}))
+    elif rs.password != pw:
+        return HttpResponse(json.dumps({'code': 400, 'message': error_msg2}))
+    else:
+        req.session['uname'] = uname
+        req.session['utype'] = utype
+        return HttpResponse(json.dumps({'code': 200}))
 
 def stu_login(req, uname, pw, utype):
-    return HttpResponse(json.dumps({'code': 400, 'message': 'unsuport'}))
+    service = StuService()
+    rs = service.findByNumber(uname)
+    if rs is None:
+        return HttpResponse(json.dumps({'code': 400, 'message': error_msg1}))
+    elif rs.password != pw:
+        return HttpResponse(json.dumps({'code': 400, 'message': error_msg2}))
+    else:
+        req.session['uname'] = uname
+        req.session['utype'] = utype
+        return HttpResponse(json.dumps({'code': 200}))
 
