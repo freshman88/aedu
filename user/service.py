@@ -20,23 +20,35 @@ class AdminService:
 class TechService:
 
     def _myRS(self):
-        return Tech.objects.values('number', 'name', 'sex', 'age', 'techAge', 'baseUnit').order_by('-number')
+        return Tech.objects.values('id', 'number', 'name', 'sex', 'age', 'techAge', 'baseUnit').order_by('-number')
 
     def save(self, **kw):
         number = self._createNewNumber()
         password = createDefaultPW()
         u = Tech(number=number, password=password,
-            name=kw.name, sex=kw.sex, age=kw.age, techAge=kw.techAge, baseUnit=kw.baseUnit)
+            name=kw['name'], sex=kw['sex'], age=kw['age'], techAge=kw['techAge'], baseUnit=kw['baseUnit'])
         u.save()
 
     def _createNewNumber(self):
-        oldNumber = Tech.objects.order_by('-number')[0]
-        if oldNumber is None:
+        rs = Tech.objects.values('number').order_by('-number')[0:1]
+        if len(rs) == 0:
             oldNumber = 'L001'
+        else:
+            oldNumber = rs[0].get('number')
         return createNumber(oldNumber)
+
+    def update(self, id, **kw):
+        Tech.objects.filter(id=id).update(name=kw['name'], sex=kw['sex'], age=kw['age'], techAge=kw['techAge'], baseUnit=kw['baseUnit'])
+
+    def delete(self, id):
+        u = Tech.objects.get(id=id)
+        u.delete()
 
     def list(self):
         return self._myRS().all()
+
+    def findById(self, id):
+        return self._myRS().get(id=id)
 
     def findByNumber(self, number):
         rlist = self._myRS().filter(number=number)
@@ -45,17 +57,20 @@ class TechService:
         else:
             return rlist[0]
 
-    def queryByNumber(self, number):
-        return self._myRS().filter(number__exact=number)
+    def query(self, name, value):
+        if name == 'number':
+            return self._myRS().filter(number__exact=value)
+        elif name == 'name':
+            return self._myRS().filter(name__exact=value)
+        else:
+            return None
 
-    def queryByName(self, name):
-        return self._myRS().filter(name__exact=name)
 
 
 class StuService:
 
     def _myRS(self):
-        return Stu.objects.values('number', 'name', 'sex', 'age', 'register', 'baseUnit').order_by('-number')
+        return Stu.objects.values('id', 'number', 'name', 'sex', 'age', 'register', 'baseUnit').order_by('-number')
 
     def save(self, **kw):
         number = self._createNewNumber()

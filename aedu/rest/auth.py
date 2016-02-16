@@ -23,6 +23,19 @@ def is_login(req):
     utype = req.session.get('utype')
     return uname is not None and utype is not None
 
+def logout(req):
+    if req.method != 'POST':
+        return HttpResponseNotFound()
+
+    if req.session.get('uname') is not None:
+        del req.session['uname']
+    if req.session.get('utype') is not None:
+        del req.session['utype']
+    if req.session.get('id') is not None:
+        del req.session['id']
+    return HttpResponse(json.dumps({'code': 200}))
+
+
 
 # sub functions
 error_msg1 = '该用户不存在'
@@ -37,6 +50,7 @@ def admin_login(req, uname, pw, utype):
     else:
         req.session['uname'] = uname
         req.session['utype'] = utype
+        req.session['id'] = rs.id
         return HttpResponse(json.dumps({'code': 200}))
 
 def tech_login(req, uname, pw, utype):
@@ -49,6 +63,7 @@ def tech_login(req, uname, pw, utype):
     else:
         req.session['uname'] = uname
         req.session['utype'] = utype
+        req.session['id'] = rs.id
         return HttpResponse(json.dumps({'code': 200}))
 
 def stu_login(req, uname, pw, utype):
@@ -61,5 +76,6 @@ def stu_login(req, uname, pw, utype):
     else:
         req.session['uname'] = uname
         req.session['utype'] = utype
+        req.session['id'] = rs.id
         return HttpResponse(json.dumps({'code': 200}))
 

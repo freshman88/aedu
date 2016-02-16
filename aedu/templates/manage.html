@@ -26,6 +26,8 @@
       .my-add-main{}
       .my-add-main h2{text-align: center;}
       .my-add-main .mybtn{width: 100px;}
+
+      .mylink{margin-right: 5px;}
     </style>
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
@@ -54,7 +56,8 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">程统帅</a></li>
+            <li><a href="javascript:void(0);">程统帅</a></li>
+            <li id="logout"><a href="javascript:void(0);">注销</a></li>
           </ul>
         </div>
       </div>
@@ -79,18 +82,18 @@
           <h2 class="sub-header">教员信息</h2>
           <div class="myseachbox">
             <div class="input-group mysearch-input-group">
-              <div class="dropdown input-group-btn">
+              <div id="eacher_search_type" class="dropdown input-group-btn">
                 <button class="btn btn-default dropdown-toggle" type="button" id="teacher_searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  工号
+                  <span class="my-selected" data-value="number">工号</span>
                   <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="teacher_searchType">
-                  <li><a href="#">姓名</a></li>
+                  <li data-value="name"><a href="javascript:void(0);">姓名</a></li>
                 </ul>
               </div>
-              <input type="text" class="form-control" />
+              <input id="eacher_search_input" type="text" class="form-control" />
             </div>
-            <button type="button" class="btn btn-primary mysearch-btn">查询</button>
+            <button id="teacher_search_btn" type="button" class="btn btn-primary mysearch-btn">查询</button>
             <button id="teacher_add_btn" type="button" class="btn btn-primary mysearch-btn">新增</button>
           </div>  
           <div class="table-responsive">
@@ -103,6 +106,7 @@
                   <th>年龄</th>
                   <th>教龄</th>
                   <th>基层单位</th>
+                  <th>操作</th>
                 </tr>
               </thead>
               <tbody id="teacherList">
@@ -322,8 +326,8 @@
                 <label for="teacher_add_sex" class="col-sm-4 control-label">性别</label>
                 <div class="col-sm-2">
                   <select class="form-control" id="teacher_add_sex">
-                    <option>男</option>
-                    <option>女</option>
+                    <option value="男">男</option>
+                    <option value="女">女</option>
                   </select>
                 </div>
               </div>
@@ -347,12 +351,57 @@
               </div>
               <div class="form-group">
                 <div class="col-sm-offset-4 col-sm-5">
-                  <button type="submit" class="btn btn-primary btn-lg mybtn" onclick="return false">新增</button>
+                  <button id="teacher_add_btn2" type="submit" class="btn btn-primary btn-lg mybtn" onclick="return false">新增</button>
                 </div>
               </div>
             </form>
         </div>
         <!-- 新增教员 END -->
+        <!-- 修改教员 -->
+        <div id="teacher_edit" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main my-add-main" style="display: none;">
+          <h2 class="sub-header">新增教员</h2>
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label for="teacher_edit_name" class="col-sm-4 control-label">姓名</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" id="teacher_edit_name" placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="teacher_edit_sex" class="col-sm-4 control-label">性别</label>
+                <div class="col-sm-2">
+                  <select class="form-control" id="teacher_edit_sex">
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="teacher_edit_age" class="col-sm-4 control-label">年龄</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" id="teacher_edit_age" placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="teacher_edit_years" class="col-sm-4 control-label">教龄</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" id="teacher_edit_years" placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="teacher_edit_department" class="col-sm-4 control-label">基层单位</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" id="teacher_edit_department" placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-5">
+                  <button id="teacher_edit_btn2" type="submit" class="btn btn-primary btn-lg mybtn" onclick="return false">修改</button>
+                </div>
+              </div>
+            </form>
+        </div>
+        <!-- 修改教员 END -->
 
         <!-- 新增学员 -->
         <div id="student_add" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main my-add-main" style="display: none;">

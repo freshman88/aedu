@@ -17,7 +17,14 @@ urlpatterns = patterns('',
     ('^manage/$', manage),
 
     ('^rest/auth/login$', auth.login),
-    ('^rest/techer/list$', teacher.all),
+    ('^rest/auth/logout$', auth.logout),
+
+    ('^rest/techer/list/$', teacher.all),
+    ('^rest/techer/query$', teacher.query),
+    ('^rest/techer/add$', teacher.save),
+    ('^rest/techer/(\d)/$', teacher.findById),
+    ('^rest/techer/update$', teacher.update),
+    ('^rest/techer/delete$', teacher.delete),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
