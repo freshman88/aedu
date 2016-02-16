@@ -1,0 +1,202 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title></title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static "lib/bootstrap/dist/css/bootstrap.min.css" %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static "style/dashboard.css" %}" rel="stylesheet">
+    <style type="text/css">
+      .myseachbox{margin-bottom: 20px;}
+      .myseachbox .mysearch-input-group{float: left; width: 300px;}
+      .myseachbox .mysearch-btn{margin-left: 35px; width: 100px;}
+
+      .my-nodata{padding: 50px 0 100px; text-align: center; background-color: #f9f9f9; color: #999; font-size: 20px; font-weight: bold;}
+
+      .my-add-main{}
+      .my-add-main h2{text-align: center;}
+      .my-add-main .mybtn{width: 100px;}
+    </style>
+
+    !-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="{% static "../../assets/js/ie8-responsive-file-warning.js" %}"></script><![endif]-->
+    <script src="{% static "js/ie-emulation-modes-warning.js" %}"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="{% static "//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js" %}"></script>
+      <script src="{% static "//cdn.bootcss.com/respond.js/1.4.2/respond.min.js" %}"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">在线思想政治教育系统</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">赵六</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div id="leftNav" class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active" content-id="study"><a href="#">学习进度</a></li>
+            <li content-id="course"><a href="#">课程管理</a></li>
+            <li content-id="examination"><a href="#">我的成绩</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li content-id="exam_ready"><a href="#">准备测试</a></li>
+          </ul>
+        </div>
+
+        <!-- 我的成绩 -->
+        <div id="study" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h2 class="sub-header">最近学习</h2> 
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>课程编号</th>
+                  <th>课程名</th>
+                  <th>课程目的</th>
+                  <th>教员</th>
+                </tr>
+              </thead>
+            </table>
+            <p class="my-nodata">暂无数据</p>
+          </div>
+        </div>
+        <!-- 学习进度 END -->
+
+        <!-- 课程管理 -->
+        <div id="course" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="display: none;">
+          <div>
+            <h2 class="sub-header">我的课程</h2> 
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>课程编号</th>
+                    <th>课程名</th>
+                    <th>课程目的</th>
+                    <th>教员</th>
+                  </tr>
+                </thead>
+              </table>
+              <p class="my-nodata">暂无数据</p>
+            </div>
+          </div>
+          <div>
+            <h2 class="sub-header">所有课程</h2>
+            <div class="myseachbox">
+              <div class="input-group mysearch-input-group">
+                <div class="dropdown input-group-btn">
+                  <button class="btn btn-default dropdown-toggle" type="button" id="course_searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    课程编号
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="course_searchType">
+                    <li><a href="#">课程名</a></li>
+                  </ul>
+                </div>
+                <input type="text" class="form-control" />
+              </div>
+              <button type="button" class="btn btn-primary mysearch-btn">查询</button>
+            </div>  
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>课程编号</th>
+                    <th>课程名</th>
+                    <th>课程目的</th>
+                    <th>教员</th>
+                  </tr>
+                </thead>
+              </table>
+              <p class="my-nodata">暂无数据</p>
+            </div>
+          </div>
+        </div>
+        <!-- 课程管理 END -->
+
+        <!-- 我的成绩 -->
+        <div id="examination" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="display: none;">
+          <h2 class="sub-header">我的成绩</h2> 
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>成绩编号</th>
+                  <th>成绩</th>
+                  <th>考题编号</th>
+                  <th>课程名</th>
+                  <th>教员</th>
+                </tr>
+              </thead>
+            </table>
+            <p class="my-nodata">暂无数据</p>
+          </div>
+        </div>
+        <!-- 我的成绩 END -->
+
+        <!-- 准备测试 -->
+        <div id="exam_ready" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="display: none;">
+          <h2 class="sub-header">准备测试</h2>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead><tr></tr></thead>
+            </table>
+            <p class="my-nodata">暂无可用测试</p>
+          </div>
+        </div>
+        <!-- 准备测试 END -->
+
+
+
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{% static "lib/jquery/dist/jquery.min.js" %}"></script>
+    <script src="{% static "lib/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="{% static "js/ie10-viewport-bug-workaround.js" %}"></script>
+
+    <script type="text/javascript">
+      $('#leftNav li').on('click', function(){
+          $('#leftNav li').removeClass('active');
+          $(this).addClass('active');
+
+          $('.main').hide();
+          $('#'+$(this).attr('content-id')).show();
+      });
+    </script>
+  </body>
+</html>

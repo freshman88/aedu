@@ -1,0 +1,321 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title></title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static "lib/bootstrap/dist/css/bootstrap.min.css" %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static "style/dashboard.css" %}" rel="stylesheet">
+    <style type="text/css">
+      .myseachbox{margin-bottom: 20px;}
+      .myseachbox .mysearch-input-group{float: left; width: 300px;}
+      .myseachbox .mysearch-btn{margin-left: 35px; width: 100px;}
+
+      .my-nodata{padding: 50px 0 100px; text-align: center; background-color: #f9f9f9; color: #999; font-size: 20px; font-weight: bold;}
+
+      .my-add-main{}
+      .my-add-main h2{text-align: center;}
+      .my-add-main .mybtn{width: 100px;}
+    </style>
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="{% static "../../assets/js/ie8-responsive-file-warning.js" %}"></script><![endif]-->
+    <script src="{% static "js/ie-emulation-modes-warning.js" %}"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="{% static "//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js" %}"></script>
+      <script src="{% static "//cdn.bootcss.com/respond.js/1.4.2/respond.min.js" %}"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">在线思想政治教育系统</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">张三</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div id="leftNav" class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active" content-id="student" ><a href="#">学员管理</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li content-id="course"><a href="#">课程管理</a></li>
+            <li content-id="testPaper"><a href="#">考题管理</a></li>
+            <li content-id="examination"><a href="#">成绩管理</a></li>
+          </ul>
+        </div>
+
+
+        <!-- 学员管理 -->
+        <div id="student" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h2 class="sub-header">学员信息</h2>
+          <div class="myseachbox">
+            <div class="input-group mysearch-input-group">
+              <div class="dropdown input-group-btn">
+                <button class="btn btn-default dropdown-toggle" type="button" id="student_searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  学号
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="student_searchType">
+                  <li><a href="#">姓名</a></li>
+                </ul>
+              </div>
+              <input type="text" class="form-control" />
+            </div>
+            <button type="button" class="btn btn-primary mysearch-btn">查询</button>
+            <button id="student_add_btn" type="button" class="btn btn-primary mysearch-btn">新增</button>
+          </div>  
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>学号</th>
+                  <th>姓名</th>
+                  <th>性别</th>
+                  <th>年龄</th>
+                  <th>户籍</th>
+                  <th>基层单位</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>S001</td>
+                  <td>赵六</td>
+                  <td>男</td>
+                  <td>14</td>
+                  <td>重庆市</td>
+                  <th>支队一</th>
+                </tr>
+                <tr>
+                  <td>S002</td>
+                  <td>钱七</td>
+                  <td>男</td>
+                  <td>15</td>
+                  <td>重庆市</td>
+                  <th>支队二</th>
+                </tr>
+                <tr>
+                  <td>S003</td>
+                  <td>孙八</td>
+                  <td>男</td>
+                  <td>16</td>
+                  <td>重庆市</td>
+                  <th>支队一</th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- 学员管理 END -->
+
+
+        <!-- 课程管理 -->
+        <div id="course" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="display: none;">
+          <h2 class="sub-header">课程信息</h2>
+          <div class="myseachbox">
+            <div class="input-group mysearch-input-group">
+              <div class="dropdown input-group-btn">
+                <button class="btn btn-default dropdown-toggle" type="button" id="course_searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  课程编号
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="course_searchType">
+                  <li><a href="#">课程名</a></li>
+                </ul>
+              </div>
+              <input type="text" class="form-control" />
+            </div>
+            <button type="button" class="btn btn-primary mysearch-btn">查询</button>
+            <button type="button" class="btn btn-primary mysearch-btn">新增</button>
+          </div>  
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>课程编号</th>
+                  <th>课程名</th>
+                  <th>课程目的</th>
+                  <th>教员</th>
+                </tr>
+              </thead>
+            </table>
+            <p class="my-nodata">暂无数据</p>
+          </div>
+        </div>
+        <!-- 课程管理 END -->
+
+
+        <!-- 考题管理 -->
+        <div id="testPaper" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="display: none;">
+          <h2 class="sub-header">考题信息</h2>
+          <div class="myseachbox">
+            <div class="input-group mysearch-input-group">
+              <div class="dropdown input-group-btn">
+                <button class="btn btn-default dropdown-toggle" type="button" id="testPaper_searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  课程名
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="testPaper_searchType">
+                  <li><a href="#">考题编号</a></li>
+                </ul>
+              </div>
+              <input type="text" class="form-control" />
+            </div>
+            <button type="button" class="btn btn-primary mysearch-btn">查询</button>
+            <button type="button" class="btn btn-primary mysearch-btn">新增</button>
+          </div>  
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>考题编号</th>
+                  <th>考题名</th>
+                  <th>考题描述</th>
+                  <th>课程名</th>
+                </tr>
+              </thead>
+            </table>
+            <p class="my-nodata">暂无数据</p>
+          </div>
+        </div>
+        <!-- 考题管理 END -->
+
+        <!-- 成绩管理 -->
+        <div id="examination" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="display: none;">
+          <h2 class="sub-header">成绩信息</h2>
+          <div class="myseachbox">
+            <div class="input-group mysearch-input-group">
+              <div class="dropdown input-group-btn">
+                <button class="btn btn-default dropdown-toggle" type="button" id="examination_searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  课程名
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="examination_searchType">
+                  <li><a href="#">成绩编号</a></li>
+                </ul>
+              </div>
+              <input type="text" class="form-control" />
+            </div>
+            <button type="button" class="btn btn-primary mysearch-btn">查询</button>
+          </div>  
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>成绩编号</th>
+                  <th>成绩</th>
+                  <th>考题编号</th>
+                  <th>课程名</th>
+                  <th>教员</th>
+                </tr>
+              </thead>
+            </table>
+            <p class="my-nodata">暂无数据</p>
+          </div>
+        </div>
+        <!-- 成绩管理 END -->
+
+
+
+
+        <!-- 新增学员 -->
+        <div id="student_add" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main my-add-main" style="display: none;">
+          <h2 class="sub-header">新增学员</h2>
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label for="student_add_name" class="col-sm-4 control-label">姓名</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" id="student_add_name" placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="student_add_sex" class="col-sm-4 control-label">性别</label>
+                <div class="col-sm-2">
+                  <select class="form-control" id="student_add_sex">
+                    <option>男</option>
+                    <option>女</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="student_add_age" class="col-sm-4 control-label">年龄</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" id="student_add_age" placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="student_add_home" class="col-sm-4 control-label">户籍</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" id="student_add_home" placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="student_add_department" class="col-sm-4 control-label">基层单位</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" id="student_add_department" placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-5">
+                  <button type="submit" class="btn btn-primary btn-lg mybtn" onclick="return false">新增</button>
+                </div>
+              </div>
+            </form>
+        </div>
+        <!-- 新增学员 END -->
+
+
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{% static "lib/jquery/dist/jquery.min.js" %}"></script>
+    <script src="{% static "lib/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="{% static "js/ie10-viewport-bug-workaround.js" %}"></script>
+
+    <script type="text/javascript">
+      $('#leftNav li').on('click', function(){
+          $('#leftNav li').removeClass('active');
+          $(this).addClass('active');
+
+          $('.main').hide();
+          $('#'+$(this).attr('content-id')).show();
+      });
+      $('#student_add_btn').on('click', function(){
+          $('.main').hide();
+          $('#student_add').show();
+      });
+    </script>
+  </body>
+</html>

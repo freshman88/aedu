@@ -1,0 +1,73 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title>在线思想政治教育系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static "lib/bootstrap/dist/css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "lib/bootstrap/dist/css/bootstrap-theme.min.css" %}">
+    <style type="text/css">
+      .myselect{}
+      .myselect button{width: 200px;}
+      .myselect ul{width: 200px;}
+      .myselect ul li{text-align: center;}
+      .myfooter{height: 160px; background: #f5f3ec; border-top: 1px solid #f4f4f4; color: #aaa; padding: 30px 5% 20px; margin-bottom: 0;}
+      .myfooter p{text-align: center;}
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-lg-offset-4 col-lg-4">
+                <h1>在线思想政治教育系统</h1>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-offset-4 col-lg-4">
+                <form>
+                  <div class="form-group">
+                    <label for="username">用户名</label>
+                    <input type="text" class="form-control" id="username" placeholder="">
+                  </div>
+                  <div class="form-group">
+                    <label for="password">密码</label>
+                    <input type="password" class="form-control" id="password" placeholder="">
+                  </div>
+                  <div id="utype" class="dropdown myselect">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                      <span class="my-selected" data-value="stu">学员</span>
+                      <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                      <li data-value="admin"><a href="javascript:void(0);">系统管理员</a></li>
+                      <li data-value="tech"><a href="javascript:void(0);">教员</a></li>
+                    </ul>
+                  </div>
+                  <div class="checkbox">
+                    <label>
+                      <input id="remember" type="checkbox" /> 记住密码
+                    </label>
+                  </div>
+                  <br />
+                  <button id="submitBtn" type="submit" class="btn btn-primary btn-lg" onclick="return false">登录</button>
+                </form>
+            </div>
+        </div>
+        <br /><br /><br /><br /><br /><br />
+        <div class="row myfooter">
+            <p>copyright</p>
+            <p>2016</p>
+        </div>
+    </div>
+
+
+    <script src="{% static "lib/jquery/dist/jquery.min.js" %}"></script>
+    <script src="{% static "lib/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "layer/layer.js" %}"></script>
+    <script src="{% static "js/common.js" %}"></script>
+    <script src="{% static "js/index.js" %}"></script>
+</body>
+</html
