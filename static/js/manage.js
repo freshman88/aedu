@@ -324,7 +324,7 @@ $(function(){
                 }
                 if (rs.data.length) {
                     $('#studentListNoData').hide();
-                    findAllTeacher(rs.data);
+                    fillStudentList(rs.data);
                 }
             }
         });
@@ -384,4 +384,305 @@ $(function(){
     });
 
 
+
+
+
+    function fillCourseList(list) {
+        var html = "", s;
+        for (var i=0; i<list.length; i++) {
+            s = [
+                    "<tr>",
+                    "<td>"+$('<div>').text(list[i].id).html()+"</td>",
+                    "<td>"+$('<div>').text(list[i].name).html()+"</td>",
+                    "<td>"+$('<div>').text(list[i].purpose).html()+"</td>",
+                    "<td>"+$('<div>').text(list[i].techerName).html()+"</td>",
+
+                    "<td>",
+                    "<a data-id='"+list[i].id+"' class='mylink mycourse-del' href='javascript:void(0);'>删除</a></td>",
+                    
+                    "</tr>"
+                ].join('');
+            html += s;
+        }
+        $('#courseList').html(html);
+        $('#courseList .mycourse-del').on('click', function(){
+            var id = $(this).attr('data-id');
+            $.ajax({
+                url: '/rest/course/delete',
+                type: 'post',
+                data: {
+                    id: id
+                },
+                dataType: 'json',
+                success: function(rs){
+                    if (rs.code != 200) {
+                        layer.alert(rs.message);
+                        return;
+                    }
+                    $('#courseNav').trigger('click');
+                }
+            });
+        });
+    }
+    $('#courseNav').on('click', function(){
+        $('#course_search_input').val('');
+        $.ajax({
+            url: '/rest/course/list',
+            type: 'get',
+            dataType: 'json',
+            success: function(rs){
+                if (rs.code != 200) {
+                    layer.alert(rs.message);
+                    return;
+                }
+                if (rs.data.length) {
+                    $('#courseListNoData').hide();
+                    fillCourseList(rs.data);
+                }
+            }
+        });
+    });
+    $('#course_search_btn').on('click', function(){
+        if (!$('#course_search_input').val()) {
+            $('#courseNav').trigger('click');
+            return;
+        }
+        $.ajax({
+            url: '/rest/course/query',
+            type: 'get',
+            data: {
+                name: new Mydropdown($('#course_search_type')).val(),
+                value: $('#course_search_input').val()
+            },
+            dataType: 'json',
+            success: function(rs){
+                if (rs.code != 200) {
+                    layer.alert(rs.message);
+                    return;
+                }
+                if (rs.data.length) {
+                    $('#courseListNoData').hide();
+                    fillCourseList(rs.data);
+                }
+            }
+        });
+    });
+
+
+
+
+
+
+    function fillTestPaperList(list) {
+        var html = "", s;
+        for (var i=0; i<list.length; i++) {
+            s = [
+                    "<tr>",
+                    "<td>"+$('<div>').text(list[i].id).html()+"</td>",
+                    "<td>"+$('<div>').text(list[i].courseName).html()+"</td>",
+                    "<td>"+$('<div>').text(list[i].point).html()+"</td>",
+                    "<td>"+$('<div>').text(list[i].name).html()+"</td>",
+                    "<td>"+$('<div>').text(list[i].content).html()+"</td>",
+                    "<td>"+$('<div>').text(list[i].answerA).html()+"</td>",
+                    "<td>"+$('<div>').text(list[i].answerB).html()+"</td>",
+                    "<td>"+$('<div>').text(list[i].answerC).html()+"</td>",
+                    "<td>"+$('<div>').text(list[i].answerD).html()+"</td>",
+                    "<td>"+$('<div>').text(list[i].rightAnswer).html()+"</td>",
+
+                    "<td>",
+                    "<a data-id='"+list[i].id+"' class='mylink mytestPaper-del' href='javascript:void(0);'>删除</a></td>",
+                    
+                    "</tr>"
+                ].join('');
+            html += s;
+        }
+        $('#testPaperList').html(html);
+        $('#testPaperList .mytestPaper-del').on('click', function(){
+            var id = $(this).attr('data-id');
+            $.ajax({
+                url: '/rest/question/delete',
+                type: 'post',
+                data: {
+                    id: id
+                },
+                dataType: 'json',
+                success: function(rs){
+                    if (rs.code != 200) {
+                        layer.alert(rs.message);
+                        return;
+                    }
+                    $('#testPaperNav').trigger('click');
+                }
+            });
+        });
+    }
+    $('#testPaperNav').on('click', function(){
+        $('#testPaper_search_input').val('');
+        $.ajax({
+            url: '/rest/question/list',
+            type: 'get',
+            dataType: 'json',
+            success: function(rs){
+                if (rs.code != 200) {
+                    layer.alert(rs.message);
+                    return;
+                }
+                if (rs.data.length) {
+                    $('#testPaperListNoData').hide();
+                    fillTestPaperList(rs.data);
+                }
+            }
+        });
+    });
+    $('#testPaper_search_btn').on('click', function(){
+        if (!$('#testPaper_search_input').val()) {
+            $('#testPaperNav').trigger('click');
+            return;
+        }
+        $.ajax({
+            url: '/rest/question/query',
+            type: 'get',
+            data: {
+                name: new Mydropdown($('#testPaper_search_type')).val(),
+                value: $('#testPaper_search_input').val()
+            },
+            dataType: 'json',
+            success: function(rs){
+                if (rs.code != 200) {
+                    layer.alert(rs.message);
+                    return;
+                }
+                if (rs.data.length) {
+                    $('#testPaperListNoData').hide();
+                    fillTestPaperList(rs.data);
+                }
+            }
+        });
+    });
+
+
+
+
+
+
+
+
+    function fillExaminationList(list) {
+        var html = "", s;
+        for (var i=0; i<list.length; i++) {
+            s = [
+                    "<tr>",
+                    "<td>"+$('<div>').text(list[i].id).html()+"</td>",
+                    "<td>"+$('<div>').text(list[i].point).html()+"</td>",
+                    "<td>"+$('<div>').text(list[i].courseName).html()+"</td>",
+                    "<td>"+$('<div>').text(list[i].techerName).html()+"</td>",
+                    "<td>"+$('<div>').text(list[i].time).html()+"</td>",                    
+                    "</tr>"
+                ].join('');
+            html += s;
+        }
+        $('#examinationList').html(html);
+    }
+    $('#examinationNav').on('click', function(){
+        $('#examination_search_input').val('');
+        $.ajax({
+            url: '/rest/grade/list',
+            type: 'get',
+            dataType: 'json',
+            success: function(rs){
+                if (rs.code != 200) {
+                    layer.alert(rs.message);
+                    return;
+                }
+                if (rs.data.length) {
+                    $('#examinationListNoData').hide();
+                    fillExaminationList(rs.data);
+                }
+            }
+        });
+    });
+    $('#examination_search_btn').on('click', function(){
+        if (!$('#examination_search_input').val()) {
+            $('#examinationNav').trigger('click');
+            return;
+        }
+        $.ajax({
+            url: '/rest/grade/query',
+            type: 'get',
+            data: {
+                name: new Mydropdown($('#examination_search_type')).val(),
+                value: $('#examination_search_input').val()
+            },
+            dataType: 'json',
+            success: function(rs){
+                if (rs.code != 200) {
+                    layer.alert(rs.message);
+                    return;
+                }
+                if (rs.data.length) {
+                    $('#examinationListNoData').hide();
+                    fillExaminationList(rs.data);
+                }
+            }
+        });
+    });
+
+
+
+
+
+    function fillResourceList(list) {
+        var html = "", s;
+        for (var i=0; i<list.length; i++) {
+            s = [
+                    "<tr>",
+                    "<td>"+$('<div>').text(list[i].id).html()+"</td>",
+                    "<td>"+$('<div>').text(list[i].courseName).html()+"</td>",
+                    "<td>"+$('<div>').text(list[i].content).html()+"</td>",
+                    "<td>"+$('<div>').text(list[i].url).html()+"</td>",
+
+                    "<td>",
+                    "<a data-id='"+list[i].id+"' class='mylink myresource-del' href='javascript:void(0);'>删除</a></td>",
+
+                    "</tr>"
+                ].join('');
+            html += s;
+        }
+        $('#resourceList').html(html);
+        $('#resourceList .myresource-del').on('click', function(){
+            var id = $(this).attr('data-id');
+            $.ajax({
+                url: '/rest/resource/delete',
+                type: 'post',
+                data: {
+                    id: id
+                },
+                dataType: 'json',
+                success: function(rs){
+                    if (rs.code != 200) {
+                        layer.alert(rs.message);
+                        return;
+                    }
+                    $('#resourceNav').trigger('click');
+                }
+            });
+        });
+    }
+    $('#resourceNav').on('click', function(){
+        $.ajax({
+            url: '/rest/resource/list',
+            type: 'get',
+            dataType: 'json',
+            success: function(rs){
+                if (rs.code != 200) {
+                    layer.alert(rs.message);
+                    return;
+                }
+                if (rs.data.length) {
+                    $('#resourceListNoData').hide();
+                    fillResourceList(rs.data);
+                }
+            }
+        });
+    });
 });

@@ -1,8 +1,7 @@
 $(function(){
 
-    var $dropdown = $('.dropdown');
-    var $selected = $dropdown.find('button.dropdown-toggle span.my-selected');
-    $dropdown.find('ul.dropdown-menu li').on('click', function(){
+    $('.dropdown').find('ul.dropdown-menu li').on('click', function(){
+        var $selected = $(this).parent().parent().find('button.dropdown-toggle span.my-selected');
         var tmp = {
             name: $(this).find('a').text(),
             value: $(this).attr('data-value')

@@ -71,9 +71,10 @@
             <li id="studentNav" content-id="student" ><a href="#">学员管理</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li content-id="course"><a href="#">课程管理</a></li>
-            <li content-id="testPaper"><a href="#">考题管理</a></li>
-            <li content-id="examination"><a href="#">成绩管理</a></li>
+            <li id="courseNav" content-id="course"><a href="#">课程管理</a></li>
+            <li id="testPaperNav" content-id="testPaper"><a href="#">考题管理</a></li>
+            <li id="examinationNav" content-id="examination"><a href="#">成绩管理</a></li>
+            <li id="resourceNav" content-id="resource"><a href="#">学习资料管理</a></li>
           </ul>
         </div>
 
@@ -213,18 +214,18 @@
           <h2 class="sub-header">课程信息</h2>
           <div class="myseachbox">
             <div class="input-group mysearch-input-group">
-              <div class="dropdown input-group-btn">
+              <div id="course_search_type" class="dropdown input-group-btn">
                 <button class="btn btn-default dropdown-toggle" type="button" id="course_searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  课程编号
+                  <span class="my-selected" data-value="id">课程编号</span>
                   <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="course_searchType">
-                  <li><a href="#">课程名</a></li>
+                  <li data-value="name"><a href="javascript:void(0);">课程名</a></li>
                 </ul>
               </div>
-              <input type="text" class="form-control" />
+              <input id="course_search_input" type="text" class="form-control" />
             </div>
-            <button type="button" class="btn btn-primary mysearch-btn">查询</button>
+            <button id="course_search_btn" type="button" class="btn btn-primary mysearch-btn">查询</button>
           </div>  
           <div class="table-responsive">
             <table class="table table-striped">
@@ -234,10 +235,12 @@
                   <th>课程名</th>
                   <th>课程目的</th>
                   <th>教员</th>
+                  <th>操作</th>
                 </tr>
+                <tbody id="courseList"></tbody>
               </thead>
             </table>
-            <p class="my-nodata">暂无数据</p>
+            <p id="courseListNoData" class="my-nodata">暂无数据</p>
           </div>
         </div>
         <!-- 课程管理 END -->
@@ -248,31 +251,39 @@
           <h2 class="sub-header">考题信息</h2>
           <div class="myseachbox">
             <div class="input-group mysearch-input-group">
-              <div class="dropdown input-group-btn">
+              <div id="testPaper_search_type" class="dropdown input-group-btn">
                 <button class="btn btn-default dropdown-toggle" type="button" id="testPaper_searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  课程名
+                  <span class="my-selected" data-value="courseName">课程名</span>
                   <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="testPaper_searchType">
-                  <li><a href="#">考题编号</a></li>
+                  <li data-value="name"><a href="javascript:void(0);">考题名</a></li>
                 </ul>
               </div>
-              <input type="text" class="form-control" />
+              <input id="testPaper_search_input" type="text" class="form-control" />
             </div>
-            <button type="button" class="btn btn-primary mysearch-btn">查询</button>
+            <button id="testPaper_search_btn" type="button" class="btn btn-primary mysearch-btn">查询</button>
           </div>  
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
                 <tr>
                   <th>考题编号</th>
-                  <th>考题名</th>
-                  <th>考题描述</th>
                   <th>课程名</th>
+                  <th>分数</th>
+                  <th>考题名</th>
+                  <th>考题内容</th>
+                  <th>答案 A</th>
+                  <th>答案 B</th>
+                  <th>答案 C</th>
+                  <th>答案 D</th>
+                  <th>正确答案</th>
+                  <th>操作</th>
                 </tr>
+                <tbody id="testPaperList"></tbody>
               </thead>
             </table>
-            <p class="my-nodata">暂无数据</p>
+            <p id="testPaperListNoData" class="my-nodata">暂无数据</p>
           </div>
         </div>
         <!-- 考题管理 END -->
@@ -282,18 +293,18 @@
           <h2 class="sub-header">成绩信息</h2>
           <div class="myseachbox">
             <div class="input-group mysearch-input-group">
-              <div class="dropdown input-group-btn">
+              <div id="examination_search_type" class="dropdown input-group-btn">
                 <button class="btn btn-default dropdown-toggle" type="button" id="examination_searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  课程名
+                  <span class="my-selected" data-value="courseId">课程编号</span>
                   <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="examination_searchType">
-                  <li><a href="#">成绩编号</a></li>
+                  <li data-value="id"><a href="javascript:void(0);">成绩编号</a></li>
                 </ul>
               </div>
-              <input type="text" class="form-control" />
+              <input id="examination_search_input" type="text" class="form-control" />
             </div>
-            <button type="button" class="btn btn-primary mysearch-btn">查询</button>
+            <button id="examination_search_btn" type="button" class="btn btn-primary mysearch-btn">查询</button>
           </div>  
           <div class="table-responsive">
             <table class="table table-striped">
@@ -301,16 +312,39 @@
                 <tr>
                   <th>成绩编号</th>
                   <th>成绩</th>
-                  <th>考题编号</th>
                   <th>课程名</th>
                   <th>教员</th>
+                  <th>时间</th>
                 </tr>
+                <tbody id="examinationList"></tbody>
               </thead>
             </table>
-            <p class="my-nodata">暂无数据</p>
+            <p id="examinationListNoData" class="my-nodata">暂无数据</p>
           </div>
         </div>
         <!-- 成绩管理 END -->
+
+        <!-- 学习资料管理 -->
+        <div id="resource" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="display: none;">
+          <h2 class="sub-header">学习资料</h2>
+          <div class="myseachbox"></div>  
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>编号</th>
+                  <th>课程名</th>
+                  <th>描述</th>
+                  <th>链接</th>
+                  <th>操作</th>
+                </tr>
+                <tbody id="resourceList"></tbody>
+              </thead>
+            </table>
+            <p id="resourceListNoData" class="my-nodata">暂无数据</p>
+          </div>
+        </div>
+        <!-- 学习资料管理 END -->
 
 
 
