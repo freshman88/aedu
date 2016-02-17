@@ -31,6 +31,9 @@ class Stu(models.Model):
     age = models.IntegerField()
     register = models.CharField(max_length=50)
     baseUnit = models.CharField(max_length=100)
+    techerId = models.IntegerField(default=-1)
+    techerNumber = models.CharField(max_length=30)
+    techerName = models.CharField(max_length=30)
 
     def __unicode__(self):
         return self.name

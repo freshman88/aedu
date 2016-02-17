@@ -63,30 +63,50 @@ class TechService:
         elif name == 'name':
             return self._myRS().filter(name__exact=value)
         else:
-            return None
+            return []
 
 
 
 class StuService:
 
     def _myRS(self):
-        return Stu.objects.values('id', 'number', 'name', 'sex', 'age', 'register', 'baseUnit').order_by('-number')
+        return Stu.objects.values('id', 'number', 'name', 'sex',
+             'age', 'register', 'baseUnit', 
+             'techerId', 'techerNumber', 'techerName').order_by('-number')
 
     def save(self, **kw):
         number = self._createNewNumber()
         password = createDefaultPW()
         u = Stu(number=number, password=password,
-            name=kw.name, sex=kw.sex, age=kw.age, register=kw.register, baseUnit=kw.baseUnit)
+            name=kw['name'], sex=kw['sex'], age=kw['age'], register=kw['register'], baseUnit=kw['baseUnit'],
+            techerId=kw['techerId'], techerNumber=kw['techerNumber'], techerName=kw['techerName'])
         u.save()
 
     def _createNewNumber(self):
-        oldNumber = Tech.objects.order_by('-number')[0]
-        if oldNumber is None:
-            oldNumber = 'S001'
+        rs = Stu.objects.values('number').order_by('-number')[0:1]
+        if len(rs) == 0:
+            oldNumber = 'N001'
+        else:
+            oldNumber = rs[0].get('number')
         return createNumber(oldNumber)
 
-    def list(self):
-        return self._myRS().all()
+    def update(self, id, **kw):
+        Stu.objects.filter(id=id).update(
+            name=kw['name'], sex=kw['sex'], age=kw['age'], register=kw['register'], baseUnit=kw['baseUnit'],
+            techerId=kw['techerId'], techerNumber=kw['techerNumber'], techerName=kw['techerName'])
+
+    def delete(self, id):
+        u = Stu.objects.get(id=id)
+        u.delete()
+
+    def list(self, techerId):
+        if techerId is None:
+            return self._myRS().all()
+        else:
+            return self._myRS().filter(techerId=techerId)
+
+    def findById(self, id):
+        return self._myRS().get(id=id)
 
     def findByNumber(self, number):
         rlist = self._myRS().filter(number=number)
@@ -95,21 +115,22 @@ class StuService:
         else:
             return rlist[0]
 
-    def queryByNumber(self, number, techerId):
-        if number is None:
-            return self._myRS().all()
-        # if techerId is None:
-        #     return self._myRS().filter(number__exact=number)
-        # else:
-        #     None
-        return self._myRS().filter(number__exact=number)
+    def query(self, name, value, techerId):
+        if techerId is None: 
+            if name == 'number':
+                return self._myRS().filter(number__exact=value)
+            elif name == 'name':
+                return self._myRS().filter(name__exact=value)
+            else:
+                return []
+        else:
+            if name == 'number':
+                return self._myRS().filter(number__exact=value, techerId=techerId)
+            elif name == 'name':
+                return self._myRS().filter(name__exact=value, techerId=techerId)
+            else:
+                return []
 
-    def queryByName(self, name, techerId):
-        # if techerId is None:
-        #     return self._myRS().filter(name__exact=name)
-        # else:
-        #     None
-        return self._myRS().filter(name__exact=name)
 
 
 # sub functions
