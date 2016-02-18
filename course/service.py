@@ -16,9 +16,9 @@ class CourseService:
 
     def list(self, techerId):
         if techerId is None:
-            return Course.objects.all()
+            return Course.objects.all().values()
         else:
-            return Course.objects.filter(techerId=techerId)
+            return Course.objects.filter(techerId=techerId).values()
 
     def findById(self, id):
         return Course.objects.get(id=id)
@@ -26,16 +26,16 @@ class CourseService:
     def query(self, name, value, techerId):
         if techerId is None:
             if name == 'id':
-                return Course.objects.filter(id=value)
+                return Course.objects.filter(id=value).values()
             elif name == 'name':
-                return Course.objects.filter(name__exact=value)
+                return Course.objects.filter(name__exact=value).values()
             else:
                 return []
         else:
             if name == 'id':
-                return Course.objects.filter(id=value)
+                return Course.objects.filter(id=value).values()
             elif name == 'name':
-                return Course.objects.filter(name__exact=value, techerId=techerId)
+                return Course.objects.filter(name__exact=value, techerId=techerId).values()
             else:
                 return []
 
@@ -43,34 +43,34 @@ class CourseService:
 class QuestionService:
 
     def save(self, **kw):
-        u = Question(name=kw['name'], content=kw['content'], 
+        u = Question(name='', content=kw['content'], 
             answerA=kw['answerA'], answerB=kw['answerB'], answerC=kw['answerC'], answerD=kw['answerD'],
-            point=kw['point'], courseId=kw['courseId'], courseName=kw['courseName'])
+            rightAnswer=kw['rightAnswer'], point=kw['point'], courseId=kw['courseId'], courseName=kw['courseName'])
         u.save()
 
     def update(self, id, **kw):
-        Question.objects.filter(id=id).update(name=kw['name'], content=kw['content'], 
+        Question.objects.filter(id=id).update(name='', content=kw['content'], 
             answerA=kw['answerA'], answerB=kw['answerB'], answerC=kw['answerC'], answerD=kw['answerD'],
-            point=kw['point'], courseId=kw['courseId'], courseName=kw['courseName'])
+            rightAnswer=kw['rightAnswer'], point=kw['point'], courseId=kw['courseId'], courseName=kw['courseName'])
 
     def delete(self, id):
         u = Question.objects.get(id=id)
         u.delete()
 
     def list(self):
-        return Question.objects.all()
+        return Question.objects.all().values()
 
     def findById(self, id):
         return Question.objects.get(id=id)
 
     def findByCourseId(self, courseId):
-        return Question.objects.filter(courseId=courseId)
+        return Question.objects.filter(courseId=courseId).values()
 
     def query(self, name, value):
         if name == 'name':
-            return Question.objects.filter(name__exact=value)
+            return Question.objects.filter(name__exact=value).values()
         elif name == 'courseName':
-            return Question.objects.filter(courseName=value)
+            return Question.objects.filter(courseName=value).values()
         else:
             return []
 
@@ -96,16 +96,16 @@ class GradeService:
         u.delete()
 
     def list(self):
-        return Grade.objects.all()
+        return Grade.objects.all().values()
 
     def findById(self, id):
         return Grade.objects.get(id=id)
 
     def query(self, name, value):
         if name == 'courseId':
-            return Question.objects.filter(courseId=value)
+            return Question.objects.filter(courseId=value).values()
         elif name == 'id':
-            return Question.objects.filter(id=value)
+            return Question.objects.filter(id=value).values()
         else:
             return []
 
@@ -127,7 +127,7 @@ class ResourceService:
         u.delete()
 
     def list(self):
-        return Resource.objects.all()
+        return Resource.objects.all().values()
 
     def findById(self, id):
         return Resource.objects.get(id=id)

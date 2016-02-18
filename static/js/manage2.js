@@ -1,4 +1,5 @@
 $(function(){
+
     $('#leftNav li').on('click', function(){
         $('#leftNav li').removeClass('active');
         $(this).addClass('active');
@@ -6,13 +7,21 @@ $(function(){
         $('.main').hide();
         $('#'+$(this).attr('content-id')).show();
     });
-      $('#teacher_add_btn').on('click', function(){
-        $('.main').hide();
-        $('#teacher_add').show();
-    });
     $('#student_add_btn').on('click', function(){
         $('.main').hide();
         $('#student_add').show();
+    });
+    $('#course_add_btn').on('click', function(){
+        $('.main').hide();
+        $('#course_add').show();
+    });
+    $('#testPaper_add_btn').on('click', function(){
+        $('.main').hide();
+        $('#testPaper_add').show();
+    });
+    $('#resource_add_btn').on('click', function(){
+        $('.main').hide();
+        $('#resource_add').show();
     });
 
 
@@ -34,162 +43,6 @@ $(function(){
 
 
 
-    function fillTeacherList(list) {
-        var html = "", s;
-        for (var i=0; i<list.length; i++) {
-            s = [
-                    "<tr>",
-                    "<td>"+$('<div>').text(list[i].number).html()+"</td>",
-                    "<td>"+$('<div>').text(list[i].name).html()+"</td>",
-                    "<td>"+$('<div>').text(list[i].sex).html()+"</td>",
-                    "<td>"+$('<div>').text(list[i].age).html()+"</td>",
-                    "<td>"+$('<div>').text(list[i].techAge).html()+"</td>",
-                    "<td>"+$('<div>').text(list[i].baseUnit).html()+"</td>",
-
-                    "<td><a data-id='"+list[i].id+"' class='mylink mytech-edit' href='javascript:void(0);'>修改</a>",
-                    "<a data-id='"+list[i].id+"' class='mylink mytech-del' href='javascript:void(0);'>删除</a></td>",
-                    
-                    "</tr>"
-                ].join('');
-            html += s;
-        }
-        $('#teacherList').html(html);
-        $('#teacherList .mytech-edit').on('click', function(){
-            var id = $(this).attr('data-id');
-            $.ajax({
-                url: '/rest/techer/'+id,
-                type: 'get',
-                dataType: 'json',
-                success: function(rs){
-                    if (rs.code != 200) {
-                        layer.alert(rs.message);
-                        return;
-                    }
-                    var data = rs.data;
-                    $('#teacher_edit_name').val(data.name);
-                    $('#teacher_edit_sex').val(data.sex);
-                    $('#teacher_edit_age').val(data.age);
-                    $('#teacher_edit_years').val(data.techAge);
-                    $('#teacher_edit_department').val(data.baseUnit);
-                    $('#teacher').hide();
-                    $('#teacher_edit').attr('data-id', id).show();
-                }
-            });
-        });
-        $('#teacherList .mytech-del').on('click', function(){
-            var id = $(this).attr('data-id');
-            $.ajax({
-                url: '/rest/techer/delete',
-                type: 'post',
-                data: {
-                    id: id
-                },
-                dataType: 'json',
-                success: function(rs){
-                    if (rs.code != 200) {
-                        layer.alert(rs.message);
-                        return;
-                    }
-                    $('#teacherNav').trigger('click');
-                }
-            });
-        });
-    }
-
-    $('#teacherNav').on('click', function(){
-        $('#eacher_search_input').val('');
-        $.ajax({
-            url: '/rest/techer/list',
-            type: 'get',
-            dataType: 'json',
-            success: function(rs){
-                if (rs.code != 200) {
-                    layer.alert(rs.message);
-                    return;
-                }
-                if (rs.data.length) {
-                    $('#teacherListNoData').hide();
-                    fillTeacherList(rs.data);
-                }
-            }
-        });
-    });
-    $('#teacher_search_btn').on('click', function(){
-        if (!$('#eacher_search_input').val()) {
-            $('#teacherNav').trigger('click');
-            return;
-        }
-        $.ajax({
-            url: '/rest/techer/query',
-            type: 'get',
-            data: {
-                name: new Mydropdown($('#eacher_search_type')).val(),
-                value: $('#eacher_search_input').val()
-            },
-            dataType: 'json',
-            success: function(rs){
-                if (rs.code != 200) {
-                    layer.alert(rs.message);
-                    return;
-                }
-                if (rs.data.length) {
-                    $('#teacherListNoData').hide();
-                    fillTeacherList(rs.data);
-                }
-            }
-        });
-    });
-    
-    $('#teacher_add_btn2').on('click', function(){
-        $.ajax({
-            url: '/rest/techer/add',
-            type: 'post',
-            data: {
-                name: $('#teacher_add_name').val(), 
-                sex: $('#teacher_add_sex').val(), 
-                age: $('#teacher_add_age').val(), 
-                techAge: $('#teacher_add_years').val(), 
-                baseUnit: $('#teacher_add_department').val()
-            },
-            dataType: 'json',
-            success: function(rs){
-                if (rs.code != 200) {
-                    layer.alert(rs.message);
-                    return;
-                }
-                $('#teacherNav').trigger('click');
-            }
-        });
-    });
-    $('#teacher_edit_btn2').on('click', function(){
-        $.ajax({
-            url: '/rest/techer/update',
-            type: 'post',
-            data: {
-                id: $('#teacher_edit').attr('data-id'),
-                name: $('#teacher_edit_name').val(), 
-                sex: $('#teacher_edit_sex').val(), 
-                age: $('#teacher_edit_age').val(), 
-                techAge: $('#teacher_edit_years').val(), 
-                baseUnit: $('#teacher_edit_department').val()
-            },
-            dataType: 'json',
-            success: function(rs){
-                if (rs.code != 200) {
-                    layer.alert(rs.message);
-                    return;
-                }
-                $('#teacherNav').trigger('click');
-            }
-        });
-    });
-
-    $('#teacherNav').trigger('click');
-
-
-
-
-
     function fillStudentList(list) {
         var html = "", s;
         for (var i=0; i<list.length; i++) {
@@ -201,8 +54,6 @@ $(function(){
                     "<td>"+$('<div>').text(list[i].age).html()+"</td>",
                     "<td>"+$('<div>').text(list[i].register).html()+"</td>",
                     "<td>"+$('<div>').text(list[i].baseUnit).html()+"</td>",
-                    "<td>"+$('<div>').text(list[i].techerName).html()+"</td>",
-                    "<td>"+$('<div>').text(list[i].techerNumber).html()+"</td>",
 
                     "<td><a data-id='"+list[i].id+"' class='mylink mystu-edit' href='javascript:void(0);'>修改</a>",
                     "<a data-id='"+list[i].id+"' class='mylink mystu-del' href='javascript:void(0);'>删除</a></td>",
@@ -383,6 +234,8 @@ $(function(){
         });
     });
 
+    $('#studentNav').trigger('click');
+
 
 
 
@@ -395,7 +248,6 @@ $(function(){
                     "<td>"+$('<div>').text(list[i].id).html()+"</td>",
                     "<td>"+$('<div>').text(list[i].name).html()+"</td>",
                     "<td>"+$('<div>').text(list[i].purpose).html()+"</td>",
-                    "<td>"+$('<div>').text(list[i].techerName).html()+"</td>",
 
                     "<td>",
                     "<a data-id='"+list[i].id+"' class='mylink mycourse-del' href='javascript:void(0);'>删除</a></td>",
@@ -468,6 +320,52 @@ $(function(){
         });
     });
 
+    $('#course_add_submit_btn').on('click', function(){
+        $.ajax({
+            url: '/rest/course/add',
+            type: 'post',
+            data: {
+                name: $('#course_add_name').val(), 
+                purpose: $('#course_add_purpose').val()
+            },
+            dataType: 'json',
+            success: function(rs){
+                if (rs.code != 200) {
+                    layer.alert(rs.message);
+                    return;
+                }
+                $('#courseNav').trigger('click');
+            }
+        });
+    });
+
+    function findAllCourse(callback){
+        function fill(list){
+            var html = "";
+            for (var i=0; i<list.length; i++) {
+                html += [
+                    '<option value="'+[list[i].id, list[i].name].join('|')+'">',
+                    list[i].name+'   '+list[i].techerName,
+                    '</option>'
+                ].join('');
+            }
+            $('#testPaper_add_course, #resource_add_course').html(html);
+        }
+        $.ajax({
+            url: '/rest/course/list',
+            type: 'get',
+            dataType: 'json',
+            success: function(rs){
+                if (rs.code != 200) {
+                    layer.alert(rs.message);
+                    return;
+                }
+                fill(rs.data);
+                callback && callback();
+            }
+        });
+    }
+    
 
 
 
@@ -481,7 +379,6 @@ $(function(){
                     "<td>"+$('<div>').text(list[i].id).html()+"</td>",
                     "<td>"+$('<div>').text(list[i].courseName).html()+"</td>",
                     "<td>"+$('<div>').text(list[i].point).html()+"</td>",
-                    "<td>"+$('<div>').text(list[i].name).html()+"</td>",
                     "<td>"+$('<div>').text(list[i].content).html()+"</td>",
                     "<td>"+$('<div>').text(list[i].answerA).html()+"</td>",
                     "<td>"+$('<div>').text(list[i].answerB).html()+"</td>",
@@ -560,6 +457,39 @@ $(function(){
         });
     });
 
+    $('#testPaper_add_btn').on('click', function(){
+        findAllCourse();
+    });
+    $('#testPaper_add_submit_btn').on('click', function(){
+        var sl = $('#testPaper_add_course').val().split('|');
+        $.ajax({
+            url: '/rest/question/add',
+            type: 'post',
+            data: {
+                content: $('#testPaper_add_content').val(), 
+                answerA: $('#testPaper_add_answerA').val(),
+                answerB: $('#testPaper_add_answerB').val(),
+                answerC: $('#testPaper_add_answerC').val(),
+                answerD: $('#testPaper_add_answerD').val(),
+                rightAnswer: $('#testPaper_add_rightAnswer').val(),
+                point: $('#testPaper_add_point').val(),
+                courseId: sl[0],
+                courseName: sl[1]
+            },
+            dataType: 'json',
+            success: function(rs){
+                if (rs.code != 200) {
+                    layer.alert(rs.message);
+                    return;
+                }
+                $('#testPaperNav').trigger('click');
+            }
+        });
+    });
+
+
+
+
 
 
 
@@ -631,6 +561,7 @@ $(function(){
 
 
 
+
     function fillResourceList(list) {
         var html = "", s;
         for (var i=0; i<list.length; i++) {
@@ -685,4 +616,30 @@ $(function(){
             }
         });
     });
+    $('#resource_add_btn').on('click', function(){
+        findAllCourse();
+    });
+    $('#resource_add_submit_btn').on('click', function(){
+        var sl = $('#resource_add_course').val().split('|');
+        $.ajax({
+            url: '/rest/resource/add',
+            type: 'post',
+            data: {
+                content: $('#resource_add_content').val(),
+                url: $('#resource_add_url').val(),
+                courseId: sl[0],
+                courseName: sl[1]
+            },
+            dataType: 'json',
+            success: function(rs){
+                if (rs.code != 200) {
+                    layer.alert(rs.message);
+                    return;
+                }
+                $('#resourceNav').trigger('click');
+            }
+        });
+    });
+
+
 });

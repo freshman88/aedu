@@ -51,7 +51,7 @@ class TechService:
         return self._myRS().get(id=id)
 
     def findByNumber(self, number):
-        rlist = self._myRS().filter(number=number)
+        rlist = Tech.objects.filter(number=number)
         if len(rlist) < 1:
             return None
         else:
@@ -109,7 +109,7 @@ class StuService:
         return self._myRS().get(id=id)
 
     def findByNumber(self, number):
-        rlist = self._myRS().filter(number=number)
+        rlist = Stu.objects.filter(number=number)
         if len(rlist) < 1:
             return None
         else:

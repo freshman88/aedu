@@ -31,7 +31,6 @@ def save(req):
         return HttpResponseNotAllowed()
     service=QuestionService()
     service.save(
-        name=req.POST.get('name'), 
         content=req.POST.get('content'), 
         answerA=req.POST.get('answerA'),
         answerB=req.POST.get('answerB'),

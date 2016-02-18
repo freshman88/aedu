@@ -6,19 +6,25 @@ import json
 def all(req):
     if not is_login(req):
         return HttpResponseNotAllowed()
+    techerId=None
+    if 'tech' == req.session['utype']:
+        techerId = req.session['id']
     service=StuService()
     data={'code': 200}
-    data['data'] = list(service.list(req.GET.get('techerId')))
+    data['data'] = list(service.list(techerId))
     return HttpResponse(json.dumps(data))
 
 def query(req):
     if not is_login(req):
         return HttpResponseNotAllowed()
+    techerId=None
+    if 'tech' == req.session['utype']:
+        techerId = req.session['id']
     name=req.GET.get('name')
     value=req.GET.get('value')
     service=StuService()
     data={'code': 200}
-    data['data'] = list(service.query(name, value, req.GET.get('techerId')))
+    data['data'] = list(service.query(name, value, techerId))
     return HttpResponse(json.dumps(data))
 
 

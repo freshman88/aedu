@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title></title>
+    <title>在线思想政治教育系统</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{% static "lib/bootstrap/dist/css/bootstrap.min.css" %}" rel="stylesheet">
@@ -26,6 +26,8 @@
       .my-add-main{}
       .my-add-main h2{text-align: center;}
       .my-add-main .mybtn{width: 100px;}
+
+      .mylink{margin-right: 5px;}
     </style>
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
@@ -65,33 +67,34 @@
       <div class="row">
         <div id="leftNav" class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active" content-id="student" ><a href="#">学员管理</a></li>
+            <li id="studentNav" content-id="student" ><a href="#">学员管理</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li content-id="course"><a href="#">课程管理</a></li>
-            <li content-id="testPaper"><a href="#">考题管理</a></li>
-            <li content-id="examination"><a href="#">成绩管理</a></li>
+            <li id="courseNav" content-id="course"><a href="#">课程管理</a></li>
+            <li id="testPaperNav" content-id="testPaper"><a href="#">考题管理</a></li>
+            <li id="examinationNav" content-id="examination"><a href="#">成绩管理</a></li>
+            <li id="resourceNav" content-id="resource"><a href="#">学习资料管理</a></li>
           </ul>
         </div>
 
 
         <!-- 学员管理 -->
-        <div id="student" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <div id="student" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="display: none;">
           <h2 class="sub-header">学员信息</h2>
           <div class="myseachbox">
             <div class="input-group mysearch-input-group">
-              <div class="dropdown input-group-btn">
+              <div id="student_search_type" class="dropdown input-group-btn">
                 <button class="btn btn-default dropdown-toggle" type="button" id="student_searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  学号
+                  <span class="my-selected" data-value="number">学号</span>
                   <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="student_searchType">
-                  <li><a href="#">姓名</a></li>
+                  <li data-value="name"><a href="#">姓名</a></li>
                 </ul>
               </div>
-              <input type="text" class="form-control" />
+              <input id="student_search_input" type="text" class="form-control" />
             </div>
-            <button type="button" class="btn btn-primary mysearch-btn">查询</button>
+            <button id="student_search_btn" type="button" class="btn btn-primary mysearch-btn">查询</button>
             <button id="student_add_btn" type="button" class="btn btn-primary mysearch-btn">新增</button>
           </div>  
           <div class="table-responsive">
@@ -104,149 +107,15 @@
                   <th>年龄</th>
                   <th>户籍</th>
                   <th>基层单位</th>
+                  <th>操作</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>S001</td>
-                  <td>赵六</td>
-                  <td>男</td>
-                  <td>14</td>
-                  <td>重庆市</td>
-                  <th>支队一</th>
-                </tr>
-                <tr>
-                  <td>S002</td>
-                  <td>钱七</td>
-                  <td>男</td>
-                  <td>15</td>
-                  <td>重庆市</td>
-                  <th>支队二</th>
-                </tr>
-                <tr>
-                  <td>S003</td>
-                  <td>孙八</td>
-                  <td>男</td>
-                  <td>16</td>
-                  <td>重庆市</td>
-                  <th>支队一</th>
-                </tr>
-              </tbody>
+              <tbody id="studentList"></tbody>
             </table>
+            <p id="studentListNoData" class="my-nodata">暂无数据</p>
           </div>
         </div>
         <!-- 学员管理 END -->
-
-
-        <!-- 课程管理 -->
-        <div id="course" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="display: none;">
-          <h2 class="sub-header">课程信息</h2>
-          <div class="myseachbox">
-            <div class="input-group mysearch-input-group">
-              <div class="dropdown input-group-btn">
-                <button class="btn btn-default dropdown-toggle" type="button" id="course_searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  课程编号
-                  <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="course_searchType">
-                  <li><a href="#">课程名</a></li>
-                </ul>
-              </div>
-              <input type="text" class="form-control" />
-            </div>
-            <button type="button" class="btn btn-primary mysearch-btn">查询</button>
-            <button type="button" class="btn btn-primary mysearch-btn">新增</button>
-          </div>  
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>课程编号</th>
-                  <th>课程名</th>
-                  <th>课程目的</th>
-                  <th>教员</th>
-                </tr>
-              </thead>
-            </table>
-            <p class="my-nodata">暂无数据</p>
-          </div>
-        </div>
-        <!-- 课程管理 END -->
-
-
-        <!-- 考题管理 -->
-        <div id="testPaper" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="display: none;">
-          <h2 class="sub-header">考题信息</h2>
-          <div class="myseachbox">
-            <div class="input-group mysearch-input-group">
-              <div class="dropdown input-group-btn">
-                <button class="btn btn-default dropdown-toggle" type="button" id="testPaper_searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  课程名
-                  <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="testPaper_searchType">
-                  <li><a href="#">考题编号</a></li>
-                </ul>
-              </div>
-              <input type="text" class="form-control" />
-            </div>
-            <button type="button" class="btn btn-primary mysearch-btn">查询</button>
-            <button type="button" class="btn btn-primary mysearch-btn">新增</button>
-          </div>  
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>考题编号</th>
-                  <th>考题名</th>
-                  <th>考题描述</th>
-                  <th>课程名</th>
-                </tr>
-              </thead>
-            </table>
-            <p class="my-nodata">暂无数据</p>
-          </div>
-        </div>
-        <!-- 考题管理 END -->
-
-        <!-- 成绩管理 -->
-        <div id="examination" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="display: none;">
-          <h2 class="sub-header">成绩信息</h2>
-          <div class="myseachbox">
-            <div class="input-group mysearch-input-group">
-              <div class="dropdown input-group-btn">
-                <button class="btn btn-default dropdown-toggle" type="button" id="examination_searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  课程名
-                  <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="examination_searchType">
-                  <li><a href="#">成绩编号</a></li>
-                </ul>
-              </div>
-              <input type="text" class="form-control" />
-            </div>
-            <button type="button" class="btn btn-primary mysearch-btn">查询</button>
-          </div>  
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>成绩编号</th>
-                  <th>成绩</th>
-                  <th>考题编号</th>
-                  <th>课程名</th>
-                  <th>教员</th>
-                </tr>
-              </thead>
-            </table>
-            <p class="my-nodata">暂无数据</p>
-          </div>
-        </div>
-        <!-- 成绩管理 END -->
-
-
-
-
         <!-- 新增学员 -->
         <div id="student_add" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main my-add-main" style="display: none;">
           <h2 class="sub-header">新增学员</h2>
@@ -261,8 +130,8 @@
                 <label for="student_add_sex" class="col-sm-4 control-label">性别</label>
                 <div class="col-sm-2">
                   <select class="form-control" id="student_add_sex">
-                    <option>男</option>
-                    <option>女</option>
+                    <option value="男">男</option>
+                    <option value="女">女</option>
                   </select>
                 </div>
               </div>
@@ -285,13 +154,341 @@
                 </div>
               </div>
               <div class="form-group">
+                <label for="student_add_sex" class="col-sm-4 control-label">教员</label>
+                <div class="col-sm-2">
+                  <select class="form-control" id="student_add_techer">
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
                 <div class="col-sm-offset-4 col-sm-5">
-                  <button type="submit" class="btn btn-primary btn-lg mybtn" onclick="return false">新增</button>
+                  <button id="student_add_submit_btn" type="submit" class="btn btn-primary btn-lg mybtn" onclick="return false">新增</button>
                 </div>
               </div>
             </form>
         </div>
         <!-- 新增学员 END -->
+
+        <!-- 修改学员 -->
+        <div id="student_edit" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main my-add-main" style="display: none;">
+          <h2 class="sub-header">修改学员</h2>
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label for="student_edit_name" class="col-sm-4 control-label">姓名</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" id="student_edit_name" placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="student_edit_sex" class="col-sm-4 control-label">性别</label>
+                <div class="col-sm-2">
+                  <select class="form-control" id="student_edit_sex">
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="student_edit_age" class="col-sm-4 control-label">年龄</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" id="student_edit_age" placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="student_edit_home" class="col-sm-4 control-label">户籍</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" id="student_edit_home" placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="student_edit_department" class="col-sm-4 control-label">基层单位</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" id="student_edit_department" placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="student_edit_sex" class="col-sm-4 control-label">教员</label>
+                <div class="col-sm-2">
+                  <select class="form-control" id="student_edit_techer">
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-5">
+                  <button id="student_edit_submit_btn" type="submit" class="btn btn-primary btn-lg mybtn" onclick="return false">修改</button>
+                </div>
+              </div>
+            </form>
+        </div>
+        <!-- 修改学员 END -->
+
+
+
+        <!-- 课程管理 -->
+        <div id="course" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="display: none;">
+          <h2 class="sub-header">课程信息</h2>
+          <div class="myseachbox">
+            <div class="input-group mysearch-input-group">
+              <div id="course_search_type" class="dropdown input-group-btn">
+                <button class="btn btn-default dropdown-toggle" type="button" id="course_searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  <span class="my-selected" data-value="id">课程编号</span>
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="course_searchType">
+                  <li data-value="name"><a href="javascript:void(0);">课程名</a></li>
+                </ul>
+              </div>
+              <input id="course_search_input" type="text" class="form-control" />
+            </div>
+            <button id="course_search_btn" type="button" class="btn btn-primary mysearch-btn">查询</button>
+            <button id="course_add_btn" type="button" class="btn btn-primary mysearch-btn">新增</button>
+          </div>  
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>课程编号</th>
+                  <th>课程名</th>
+                  <th>课程目的</th>
+                  <th>操作</th>
+                </tr>
+                <tbody id="courseList"></tbody>
+              </thead>
+            </table>
+            <p id="courseListNoData" class="my-nodata">暂无数据</p>
+          </div>
+        </div>
+        <!-- 课程管理 END -->
+        <!-- 新增课程 -->
+        <div id="course_add" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main my-add-main" style="display: none;">
+          <h2 class="sub-header">新增课程</h2>
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label for="course_add_name" class="col-sm-4 control-label">课程名</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" id="course_add_name" placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="course_add_purpose" class="col-sm-4 control-label">课程目的</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" id="course_add_purpose" placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-5">
+                  <button id="course_add_submit_btn" type="submit" class="btn btn-primary btn-lg mybtn" onclick="return false">新增</button>
+                </div>
+              </div>
+            </form>
+        </div>
+        <!-- 新增课程 END -->
+
+
+        <!-- 考题管理 -->
+        <div id="testPaper" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="display: none;">
+          <h2 class="sub-header">考题信息</h2>
+          <div class="myseachbox">
+            <div class="input-group mysearch-input-group">
+              <div id="testPaper_search_type" class="dropdown input-group-btn">
+                <button class="btn btn-default dropdown-toggle" type="button" id="testPaper_searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  <span class="my-selected" data-value="courseName">课程名</span>
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="testPaper_searchType">
+                  <li data-value="name"><a href="javascript:void(0);">考题名</a></li>
+                </ul>
+              </div>
+              <input id="testPaper_search_input" type="text" class="form-control" />
+            </div>
+            <button id="testPaper_search_btn" type="button" class="btn btn-primary mysearch-btn">查询</button>
+            <button id="testPaper_add_btn" type="button" class="btn btn-primary mysearch-btn">新增</button>
+          </div>  
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>考题编号</th>
+                  <th>课程名</th>
+                  <th>分数</th>
+                  <th>考题内容</th>
+                  <th>答案 A</th>
+                  <th>答案 B</th>
+                  <th>答案 C</th>
+                  <th>答案 D</th>
+                  <th>正确答案</th>
+                  <th>操作</th>
+                </tr>
+                <tbody id="testPaperList"></tbody>
+              </thead>
+            </table>
+            <p id="testPaperListNoData" class="my-nodata">暂无数据</p>
+          </div>
+        </div>
+        <!-- 考题管理 END -->
+        <!-- 新增考题 -->
+        <div id="testPaper_add" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main my-add-main" style="display: none;">
+          <h2 class="sub-header">新增考题</h2>
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label for="testPaper_add_course" class="col-sm-4 control-label">课程</label>
+                <div class="col-sm-2">
+                  <select class="form-control" id="testPaper_add_course">
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="testPaper_add_point" class="col-sm-4 control-label">分数</label>
+                <div class="col-sm-2">
+                  <select class="form-control" id="testPaper_add_point">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="testPaper_add_content" class="col-sm-4 control-label">考题内容</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" id="testPaper_add_content" placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="testPaper_add_answerA" class="col-sm-4 control-label">答案 A</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" id="testPaper_add_answerA" placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="testPaper_add_answerB" class="col-sm-4 control-label">答案 B</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" id="testPaper_add_answerB" placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="testPaper_add_answerC" class="col-sm-4 control-label">答案 C</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" id="testPaper_add_answerC" placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="testPaper_add_answerD" class="col-sm-4 control-label">答案 D</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" id="testPaper_add_answerD" placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="testPaper_add_rightAnswer" class="col-sm-4 control-label">正确答案</label>
+                <div class="col-sm-2">
+                  <select class="form-control" id="testPaper_add_rightAnswer">
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-5">
+                  <button id="testPaper_add_submit_btn" type="submit" class="btn btn-primary btn-lg mybtn" onclick="return false">新增</button>
+                </div>
+              </div>
+            </form>
+        </div>
+        <!-- 新增考题 END -->
+
+        <!-- 成绩管理 -->
+        <div id="examination" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="display: none;">
+          <h2 class="sub-header">成绩信息</h2>
+          <div class="myseachbox">
+            <div class="input-group mysearch-input-group">
+              <div id="examination_search_type" class="dropdown input-group-btn">
+                <button class="btn btn-default dropdown-toggle" type="button" id="examination_searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  <span class="my-selected" data-value="courseId">课程编号</span>
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="examination_searchType">
+                  <li data-value="id"><a href="javascript:void(0);">成绩编号</a></li>
+                </ul>
+              </div>
+              <input id="examination_search_input" type="text" class="form-control" />
+            </div>
+            <button id="examination_search_btn" type="button" class="btn btn-primary mysearch-btn">查询</button>
+          </div>  
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>成绩编号</th>
+                  <th>成绩</th>
+                  <th>课程名</th>
+                  <th>教员</th>
+                  <th>时间</th>
+                </tr>
+                <tbody id="examinationList"></tbody>
+              </thead>
+            </table>
+            <p id="examinationListNoData" class="my-nodata">暂无数据</p>
+          </div>
+        </div>
+        <!-- 成绩管理 END -->
+
+
+        <!-- 学习资料管理 -->
+        <div id="resource" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="display: none;">
+          <h2 class="sub-header">学习资料</h2>
+          <div class="myseachbox">
+            <button id="resource_add_btn" type="button" class="btn btn-primary mysearch-btn">新增</button>
+          </div>  
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>编号</th>
+                  <th>课程名</th>
+                  <th>描述</th>
+                  <th>链接</th>
+                  <th>操作</th>
+                </tr>
+                <tbody id="resourceList"></tbody>
+              </thead>
+            </table>
+            <p id="resourceListNoData" class="my-nodata">暂无数据</p>
+          </div>
+        </div>
+        <!-- 学习资料管理 END -->
+        <!-- 新增资料管理 -->
+        <div id="resource_add" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main my-add-main" style="display: none;">
+          <h2 class="sub-header">新增考题</h2>
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label for="resource_add_course" class="col-sm-4 control-label">课程</label>
+                <div class="col-sm-2">
+                  <select class="form-control" id="resource_add_course">
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="resource_add_content" class="col-sm-4 control-label">描述</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" id="resource_add_content" placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="resource_add_url" class="col-sm-4 control-label">链接</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" id="resource_add_url" placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-5">
+                  <button id="resource_add_submit_btn" type="submit" class="btn btn-primary btn-lg mybtn" onclick="return false">新增</button>
+                </div>
+              </div>
+            </form>
+        </div>
+        <!-- 新增资料管理 END -->
+
+        
 
 
       </div>
@@ -305,18 +502,8 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="{% static "js/ie10-viewport-bug-workaround.js" %}"></script>
 
-    <script type="text/javascript">
-      $('#leftNav li').on('click', function(){
-          $('#leftNav li').removeClass('active');
-          $(this).addClass('active');
-
-          $('.main').hide();
-          $('#'+$(this).attr('content-id')).show();
-      });
-      $('#student_add_btn').on('click', function(){
-          $('.main').hide();
-          $('#student_add').show();
-      });
-    </script>
+    <script src="{% static "layer/layer.js" %}"></script>
+    <script src="{% static "js/common.js" %}"></script>
+    <script src="{% static "js/manage2.js" %}"></script>
   </body>
 </html>
