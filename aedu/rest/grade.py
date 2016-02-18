@@ -8,7 +8,12 @@ def all(req):
         return HttpResponseNotAllowed()
     service=GradeService()
     data={'code': 200}
-    data['data'] = list(service.list())
+    if 'tech' == req.session['utype']:
+        data['data'] = list(service.findByTechId(req.session['id']))
+    elif 'stu' == req.session['utype']:
+        data['data'] = list(service.findByStuId(req.session['id']))
+    else:
+        data['data'] = list(service.list())
     return HttpResponse(json.dumps(data))
 
 def query(req):
@@ -18,7 +23,12 @@ def query(req):
     value=req.GET.get('value')
     service=GradeService()
     data={'code': 200}
-    data['data'] = list(service.query(name, value))
+    if 'tech' == req.session['utype']:
+        data['data'] = list(service.queryByTechId(req.session['id']))
+    elif 'stu' == req.session['utype']:
+        data['data'] = list(service.queryByStuId(req.session['id']))
+    else:
+        data['data'] = list(service.query(name, value))
     return HttpResponse(json.dumps(data))
 
 

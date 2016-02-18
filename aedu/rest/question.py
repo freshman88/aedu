@@ -1,6 +1,7 @@
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseNotAllowed
 from aedu.rest.auth import is_login
 from course.service import CourseService, QuestionService, GradeService
+from user.service import StuService
 import json
 import random
 
@@ -66,6 +67,10 @@ def delete(req):
 def exam(req):
     if not is_login(req):
         return HttpResponseNotAllowed()
+
+    if 'stu' != req.session['utype']:
+        return HttpResponseNotAllowed()
+
     max_len = 5
     service=QuestionService()
     courseId = req.GET.get('courseId')
@@ -92,6 +97,10 @@ def grade(req):
 
     if not is_login(req):
         return HttpResponseNotAllowed()
+
+    if 'stu' != req.session['utype']:
+        return HttpResponseNotAllowed()
+
     answer_list = req.POST.get('answers').split(',')
     service=QuestionService()
     totalPoint = 0
@@ -105,6 +114,11 @@ def grade(req):
     c_service=CourseService()
     courseId = req.POST.get('courseId')
     course=c_service.findById(courseId)
+
+    s_service=StuService()
+    stuId = req.session['id']
+    stu = s_service.findById(stuId)
+
     g_service=GradeService()
     g_service.save(
         point=totalPoint, 
@@ -112,7 +126,10 @@ def grade(req):
         courseName=course.name, 
         techerId=course.techerId, 
         techerNumber=course.techerNumber, 
-        techerName=course.techerNumber
+        techerName=course.techerNumber,
+        stutId=stuId, 
+        stuNumber=stu.name,
+        stuName=stu.number
     )
     return HttpResponse(json.dumps({'code': 200}))
 

@@ -80,6 +80,7 @@ class GradeService:
     def save(self, **kw):
         u = Grade(point=kw['point'], courseId=kw['courseId'], courseName=kw['courseName'], 
             techerId=kw['techerId'], techerNumber=kw['techerNumber'], techerName=kw['techerName'],
+            stuId=kw['stuId'], stuNumber=kw['stuNumber'], stuName=kw['stuName'],
             time=self._nowTime())
         u.save()
 
@@ -89,6 +90,7 @@ class GradeService:
     def update(self, id, **kw):
         Grade.objects.filter(id=id).update(point=kw['point'], courseId=kw['courseId'], courseName=kw['courseName'], 
             techerId=kw['techerId'], techerNumber=kw['techerNumber'], techerName=kw['techerName'],
+            stuId=kw['stuId'], stuNumber=kw['stuNumber'], stuName=kw['stuName'],
             time=self._nowTime())
 
     def delete(self, id):
@@ -101,11 +103,33 @@ class GradeService:
     def findById(self, id):
         return Grade.objects.get(id=id)
 
+    def findByTechId(self, techerId):
+        return Grade.objects.filter(techerId=techerId)
+
+    def findByStuId(self, stutId):
+        return Grade.objects.filter(stuId=stutId)
+
     def query(self, name, value):
         if name == 'courseId':
             return Question.objects.filter(courseId=value).values()
         elif name == 'id':
             return Question.objects.filter(id=value).values()
+        else:
+            return []
+
+    def queryByTechId(self, name, value, techerId):
+        if name == 'courseId':
+            return Question.objects.filter(courseId=value, techerId=techerId).values()
+        elif name == 'id':
+            return Question.objects.filter(id=value, techerId=techerId).values()
+        else:
+            return []
+
+    def queryByStuId(self, name, value, stutId):
+        if name == 'courseId':
+            return Question.objects.filter(courseId=value, stuId=stutId).values()
+        elif name == 'id':
+            return Question.objects.filter(id=value, stuId=stutId).values()
         else:
             return []
 

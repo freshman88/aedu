@@ -11,6 +11,7 @@ def all(req):
         techerId = req.session['id']
     service=StuService()
     data={'code': 200}
+    
     data['data'] = list(service.list(techerId))
     return HttpResponse(json.dumps(data))
 

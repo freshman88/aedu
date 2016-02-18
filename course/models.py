@@ -35,6 +35,9 @@ class Grade(models.Model):
     techerId = models.IntegerField(default=-1)
     techerNumber = models.CharField(max_length=30)
     techerName = models.CharField(max_length=30)
+    stuId = models.IntegerField(default=-1)
+    stuNumber = models.CharField(max_length=30)
+    stuName = models.CharField(max_length=30)
     time = models.CharField(max_length=200)
 
     def __unicode__(self):
