@@ -9,22 +9,6 @@ $(function(){
     });
 
 
-    $('#logout').on('click', function(){
-        $.ajax({
-            url: '/rest/auth/logout',
-            type: 'post',
-            dataType: 'json',
-            success: function(rs){
-                if (rs.code != 200) {
-                    layer.alert(rs.message);
-                    return;
-                }
-                location.href = '/';
-            }
-        });
-    });
-
-
 
     function fillCourseList(list) {
         var html = "", s;
@@ -137,7 +121,6 @@ $(function(){
             s = [
                     "<tr>",
                     "<td>"+$('<div>').text(list[i].id).html()+"</td>",
-                    "<td>"+$('<div>').text(list[i].totalPoint).html()+"</td>",
                     "<td>"+$('<div>').text(list[i].point).html()+"</td>",
                     "<td>"+$('<div>').text(list[i].courseName).html()+"</td>",
                     "<td>"+$('<div>').text(list[i].techerName).html()+"</td>",
@@ -197,42 +180,11 @@ $(function(){
 
 
 
-    function findAllCourse(callback){
-        function fill(list){
-            var html = "";
-            for (var i=0; i<list.length; i++) {
-                html += [
-                    '<option value="'+[list[i].id, list[i].name].join('|')+'">',
-                    list[i].name+'   '+list[i].techerName,
-                    '</option>'
-                ].join('');
-            }
-            $('#exam_ready_course').html(html);
-        }
-        $.ajax({
-            url: '/rest/course/list',
-            type: 'get',
-            dataType: 'json',
-            success: function(rs){
-                if (rs.code != 200) {
-                    layer.alert(rs.message);
-                    return;
-                }
-                fill(rs.data);
-                callback && callback();
-            }
-        });
-    }
-    $('#examNav').on('click', function(){
-        findAllCourse();
-        $('#exam_start').hide();
-    });
-
     function fillExamList(list) {
         var html = "", s;
         for (var i=0; i<list.length; i++) {
             s = [
-                    "<tr data-id='"+list[i].id+"'>",
+                    "<tr>",
                     "<td>"+$('<div>').text(list[i].content).html()+"</td>",
                     "<td>"+$('<div>').text(list[i].point).html()+"</td>",
                     "<td>"+$('<div>').text(list[i].answerA).html()+"</td>",
@@ -241,7 +193,7 @@ $(function(){
                     "<td>"+$('<div>').text(list[i].answerD).html()+"</td>",
 
                     "<td>",
-                    "<select class='form-control mysel-answer'>",
+                    "<select class='form-control .mysel-answer'>",
                     "<option value='A'>A</option>",
                     "<option value='B'>B</option>",
                     "<option value='C'>C</option>",
@@ -255,61 +207,46 @@ $(function(){
         }
         $('#examNoList').html(html);
     }
-    $('#exam_ready_submit_btn').on('click', function(){
-        $('#exam_ready').hide();
-        $('#exam_start').show();
-        var sl = $('#exam_ready_course').val();
-        $.ajax({
-            url: '/rest/question/exam',
-            type: 'get',
-            data: {
-                courseId: sl[0]
-            },
-            dataType: 'json',
-            success: function(rs){
-                if (rs.code != 200) {
-                    layer.alert(rs.message);
-                    return;
-                }
-                if (rs.data.length) {
-                    $('#examNoData').hide();
-                    fillExamList(rs.data);
-                }
-            }
-        });
-    });
+    // $('#exam_start').on('click', function(){
+    //     $.ajax({
+    //         url: '/rest/question/exam',
+    //         type: 'get',
+    //         data: {
+    //             courseId: 
+    //         },
+    //         dataType: 'json',
+    //         success: function(rs){
+    //             if (rs.code != 200) {
+    //                 layer.alert(rs.message);
+    //                 return;
+    //             }
+    //             if (rs.data.length) {
+    //                 $('#examNoData').hide();
+    //                 fillExamList(rs.data);
+    //             }
+    //         }
+    //     });
+    // });
 
-    $('#exam_submit_btn').on('click', function(){
-        var ids = [], answers = [];
-        $('#examNoList tr').each(function(i, tr){
-            ids.push($(tr).attr('data-id'));
-            answers.push($(tr).find('.mysel-answer').val());
-        });
-        if (!ids.length) {
-            $('#exam_ready').hide();
-            $('#exam_start').show();
-            return;
-        }
-
-        var sl = $('#exam_ready_course').val();
-        $.ajax({
-            url: '/rest/question/grade',
-            type: 'post',
-            data: {
-                courseId: sl[0],
-                ids: ids.join(','),
-                answers: answers.join(',')
-            },
-            dataType: 'json',
-            success: function(rs){
-                if (rs.code != 200) {
-                    layer.alert(rs.message);
-                    return;
-                }
-                $('#examinationNav').trigger('click');
-            }
-        });
-    });
+    // $('#exam_submit_btn').on('click', function(){
+    //     $.ajax({
+    //         url: '/rest/question/grade',
+    //         type: 'post',
+    //         data: {
+    //             courseId: ,
+    //             ids: ,
+    //             answers: 
+    //         },
+    //         dataType: 'json',
+    //         success: function(rs){
+    //             if (rs.code != 200) {
+    //                 layer.alert(rs.message);
+    //                 return;
+    //             }
+    //             $('#examinationNav').trigger('click');
+    //         }
+    //     });
+    // });
 
 
 });

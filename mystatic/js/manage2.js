@@ -503,7 +503,6 @@ $(function(){
             s = [
                     "<tr>",
                     "<td>"+$('<div>').text(list[i].id).html()+"</td>",
-                    "<td>"+$('<div>').text(list[i].totalPoint).html()+"</td>",
                     "<td>"+$('<div>').text(list[i].point).html()+"</td>",
                     "<td>"+$('<div>').text(list[i].courseName).html()+"</td>",
                     "<td>"+$('<div>').text(list[i].techerName).html()+"</td>",

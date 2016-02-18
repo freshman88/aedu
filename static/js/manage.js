@@ -481,7 +481,6 @@ $(function(){
                     "<td>"+$('<div>').text(list[i].id).html()+"</td>",
                     "<td>"+$('<div>').text(list[i].courseName).html()+"</td>",
                     "<td>"+$('<div>').text(list[i].point).html()+"</td>",
-                    "<td>"+$('<div>').text(list[i].name).html()+"</td>",
                     "<td>"+$('<div>').text(list[i].content).html()+"</td>",
                     "<td>"+$('<div>').text(list[i].answerA).html()+"</td>",
                     "<td>"+$('<div>').text(list[i].answerB).html()+"</td>",
@@ -573,6 +572,7 @@ $(function(){
             s = [
                     "<tr>",
                     "<td>"+$('<div>').text(list[i].id).html()+"</td>",
+                    "<td>"+$('<div>').text(list[i].totalPoint).html()+"</td>",
                     "<td>"+$('<div>').text(list[i].point).html()+"</td>",
                     "<td>"+$('<div>').text(list[i].courseName).html()+"</td>",
                     "<td>"+$('<div>').text(list[i].techerName).html()+"</td>",

@@ -13,11 +13,11 @@ def manage(request):
         return HttpResponseNotAllowed()
     utype = request.session['utype']
     if utype == 'admin':
-        return render_to_response('manage.html')
+        return render_to_response('manage.html', {'name': request.session.get('name')})
     elif utype == 'tech':
-        return render_to_response('manage2.html')
+        return render_to_response('manage2.html', {'name': request.session.get('name')})
     elif utype == 'stu':
-        return render_to_response('manage3.html')
+        return render_to_response('manage3.html', {'name': request.session.get('name')})
     else:
         return HttpResponseNotAllowed()
 

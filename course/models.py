@@ -29,6 +29,7 @@ class Question(models.Model):
 
 
 class Grade(models.Model):
+    totalPoint = models.IntegerField(default=0)
     point = models.IntegerField(default=0)
     courseId = models.IntegerField(default=-1)
     courseName = models.CharField(max_length=30)

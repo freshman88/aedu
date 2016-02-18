@@ -30,7 +30,7 @@ $(function(){
     });
 
     $('#utype ul.dropdown-menu li').on('click', function(){
-        var value = $(this).attr('data-value');
+        var value = $('#utype span.my-selected').attr('data-value');
         switch(value){
             case 'admin': $('#usernameLabel').html('用户名'); break;
             case 'tech': $('#usernameLabel').html('工号'); break;

@@ -33,6 +33,8 @@ def logout(req):
         del req.session['utype']
     if req.session.get('id') is not None:
         del req.session['id']
+    if req.session.get('name') is not None:
+        del req.session['name']
     return HttpResponse(json.dumps({'code': 200}))
 
 
@@ -51,6 +53,7 @@ def admin_login(req, uname, pw, utype):
         req.session['uname'] = uname
         req.session['utype'] = utype
         req.session['id'] = rs.id
+        req.session['name'] = '管理员'
         return HttpResponse(json.dumps({'code': 200}))
 
 def tech_login(req, uname, pw, utype):
@@ -64,6 +67,7 @@ def tech_login(req, uname, pw, utype):
         req.session['uname'] = uname
         req.session['utype'] = utype
         req.session['id'] = rs.id
+        req.session['name'] = rs.name
         return HttpResponse(json.dumps({'code': 200}))
 
 def stu_login(req, uname, pw, utype):
@@ -77,5 +81,6 @@ def stu_login(req, uname, pw, utype):
         req.session['uname'] = uname
         req.session['utype'] = utype
         req.session['id'] = rs.id
+        req.session['name'] = rs.name
         return HttpResponse(json.dumps({'code': 200}))
 

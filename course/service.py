@@ -78,7 +78,7 @@ class QuestionService:
 class GradeService:
 
     def save(self, **kw):
-        u = Grade(point=kw['point'], courseId=kw['courseId'], courseName=kw['courseName'], 
+        u = Grade(totalPoint=kw['totalPoint'], point=kw['point'], courseId=kw['courseId'], courseName=kw['courseName'], 
             techerId=kw['techerId'], techerNumber=kw['techerNumber'], techerName=kw['techerName'],
             stuId=kw['stuId'], stuNumber=kw['stuNumber'], stuName=kw['stuName'],
             time=self._nowTime())
@@ -88,7 +88,7 @@ class GradeService:
         return time.strftime('%Y-%m-%d %H:%M:%S')
 
     def update(self, id, **kw):
-        Grade.objects.filter(id=id).update(point=kw['point'], courseId=kw['courseId'], courseName=kw['courseName'], 
+        Grade.objects.filter(id=id).update(totalPoint=kw['totalPoint'], point=kw['point'], courseId=kw['courseId'], courseName=kw['courseName'], 
             techerId=kw['techerId'], techerNumber=kw['techerNumber'], techerName=kw['techerName'],
             stuId=kw['stuId'], stuNumber=kw['stuNumber'], stuName=kw['stuName'],
             time=self._nowTime())
@@ -104,10 +104,10 @@ class GradeService:
         return Grade.objects.get(id=id)
 
     def findByTechId(self, techerId):
-        return Grade.objects.filter(techerId=techerId)
+        return Grade.objects.filter(techerId=techerId).values()
 
     def findByStuId(self, stutId):
-        return Grade.objects.filter(stuId=stutId)
+        return Grade.objects.filter(stuId=stutId).values()
 
     def query(self, name, value):
         if name == 'courseId':

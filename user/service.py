@@ -106,7 +106,7 @@ class StuService:
             return self._myRS().filter(techerId=techerId)
 
     def findById(self, id):
-        return self._myRS().get(id=id)
+        return Stu.objects.get(id=id)
 
     def findByNumber(self, number):
         rlist = Stu.objects.filter(number=number)

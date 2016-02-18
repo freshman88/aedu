@@ -102,13 +102,16 @@ def grade(req):
         return HttpResponseNotAllowed()
 
     answer_list = req.POST.get('answers').split(',')
+    # print(req.POST.get('answers'))
     service=QuestionService()
     totalPoint = 0
+    point = 0
     i = 0
     for idStr in req.POST.get('ids').split(','):
         q = service.findById(int(idStr))
         if q.rightAnswer == answer_list[i]:
-            totalPoint += q.point
+            point = point + q.point
+        totalPoint = totalPoint + q.point
         i = i+1
     
     c_service=CourseService()
@@ -121,15 +124,16 @@ def grade(req):
 
     g_service=GradeService()
     g_service.save(
-        point=totalPoint, 
+        totalPoint=totalPoint,
+        point=point, 
         courseId=courseId, 
         courseName=course.name, 
         techerId=course.techerId, 
         techerNumber=course.techerNumber, 
-        techerName=course.techerNumber,
-        stutId=stuId, 
-        stuNumber=stu.name,
-        stuName=stu.number
+        techerName=course.techerName,
+        stuId=stuId, 
+        stuNumber=stu.number,
+        stuName=stu.name
     )
     return HttpResponse(json.dumps({'code': 200}))
 
